@@ -15,3 +15,5 @@ data/.ipynb_checkpoints/100-checkpoint.json
 data_sealOwner/.ipynb_checkpoints/001-checkpoint.json
 data_sealOwner/.ipynb_checkpoints/005-checkpoint.json
 img.zip
+*.png
+*.zip
