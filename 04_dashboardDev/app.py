@@ -36,6 +36,37 @@ classify_list = ['作者', '图画印', '边款', '边框', '印文字数', '印
 # #########  generate dashboard card  #############
 # #################################################
 
+def banner():
+    return html.Div(
+        className="banner",
+        children=[
+            # Change App Name here
+            html.Div(
+                className="banner",
+                children=[
+                    html.H2(
+                        id="banner_title",
+                        children=[
+                            html.A(
+                                "中国篆刻：方寸之间大有天地",
+                                href="https://github.com/plotly/dash-svm",
+                                style={"text-decoration": "none", "color": "inherit"},
+                            )
+                        ],
+                    ),
+                    html.A(
+                        id="logo",
+                        children=[
+                            html.Img(src=app.get_asset_url("GitHub_Logo.png"))
+                        ],
+                        href="https://plot.ly/products/dash/",
+                    ),
+                ],
+            )
+        ],
+    )
+
+
 
 def classify_button():
     """
@@ -127,19 +158,57 @@ def seal_num():
                     ],
                 )
 
+mid_column_graphs = html.Div(
+                        className="mid_column_graphs",
+                        children=[
+                            dcc.Graph(id="classify_graphic", config={"displayModeBar": False}),
+                            dcc.Graph(id="share_graphic", config={"displayModeBar": False}),
+                            ]
+                    )
+
+
+left_column = html.Div(
+                className="left_column",
+                children=[
+                    classify_button(),
+                    classify_dropdown(),
+                    seal_num(),
+                    ]
+            )
+
+right_column = html.Div(
+                className="right_column",
+                children=[
+                    html.H2("可选印章数量"), 
+                    dcc.Graph(id="info_table", config={"displayModeBar": False}),
+                    ]
+            )
+
+mid_column = html.Div(
+                className="mid_column",
+                children=[
+                    dcc.Graph(id="img", config={"displayModeBar": False, 'doubleClick': 'reset'}),
+                    mid_column_graphs,
+                    ]
+            )
+
+app_body = html.Div(
+                className="app_body",
+                children=[
+                    left_column,
+                    mid_column,
+                    right_column,
+                    ]
+            )
+
 
 # #################################################
 # #################    layout   ###################
 # #################################################
 
 app.layout = html.Div([
-    classify_button(),
-    classify_dropdown(),
-    seal_num(),
-    dcc.Graph(id="classify_graphic", config={"displayModeBar": False}),
-    dcc.Graph(id="share_graphic", config={"displayModeBar": False}),
-    dcc.Graph(id="img", config={"displayModeBar": False, 'doubleClick': 'reset'}),
-    dcc.Graph(id="info_table", config={"displayModeBar": False}),
+    banner(),
+    app_body,
         ], 
         className="app_container"
     )
@@ -392,7 +461,7 @@ def update_classify_graphic(main_axis, sub_axis):
      ],
     )
 def update_share_graphic(main_axis):
-    fig = px.histogram(classify, x="朱色比例", color=str(main_axis),
+    fig = px.histogram(classify, x="朱色比例", color="印文",
                    marginal="box", # box or violin, rug
                    opacity = 0.7,
                    nbins = 50,
@@ -407,7 +476,9 @@ def update_share_graphic(main_axis):
      ],
     )
 def update_share_graphic(img_options):
-
+    """
+    https://plotly.com/python/table/
+    """
     dictfilt = lambda x, y: dict([ (i,x[i]) for i in x if i in set(y)])
     my_dict = classify[classify['序号']==1].to_dict(orient='records')[0]
     wanted_keys = ("简体","繁体","作者","图画印","边款","边框","印文字数","印形","印文","印面内容","朱色比例")
@@ -437,6 +508,13 @@ def update_share_graphic(img_options):
         height=25)
         )
     ])
+
+    fig.update_layout(
+        margin={"l": 20, "r": 20, "t": 0, "b": 0},
+        plot_bgcolor="rgba(0, 0, 0, 0)",
+        paper_bgcolor="rgba(0, 0, 0, 0)",  
+    )
+
     return fig
 
 
