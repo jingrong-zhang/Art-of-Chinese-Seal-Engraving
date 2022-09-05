@@ -66,6 +66,51 @@ def banner():
         ],
     )
 
+axis_1 = html.Div(
+                    className="axis_1",
+                    children=[
+                        html.P("1. 选择主轴"),
+                        dcc.RadioItems(
+                            id='main_axis',
+                            className="dcc_control",
+                            options=[
+                                {'label': classify_list[0], 'value': classify_list[0]},
+                                {'label': classify_list[1], 'value': classify_list[1]},
+                                {'label': classify_list[2], 'value': classify_list[2]},
+                                {'label': classify_list[3], 'value': classify_list[3]},
+                                {'label': classify_list[4], 'value': classify_list[4]},
+                                {'label': classify_list[5], 'value': classify_list[5]},
+                                {'label': classify_list[6], 'value': classify_list[6]},
+                                {'label': classify_list[7], 'value': classify_list[7]},                   
+                            ],
+                            value="印文字数",
+                            labelStyle={'display': 'block'}
+                        ),
+                        ]
+                )
+
+axis_2 = html.Div(
+                    className="axis_1",
+                    children=[
+                        html.P("2. 选择副轴"),
+                        dcc.RadioItems(
+                            id='sub_axis',
+                            className="dcc_control",
+                            options=[
+                                {'label': classify_list[0], 'value': classify_list[0]},
+                                {'label': classify_list[1], 'value': classify_list[1]},
+                                {'label': classify_list[2], 'value': classify_list[2]},
+                                {'label': classify_list[3], 'value': classify_list[3]},
+                                {'label': classify_list[4], 'value': classify_list[4]},
+                                {'label': classify_list[5], 'value': classify_list[5]},
+                                {'label': classify_list[6], 'value': classify_list[6]},
+                                {'label': classify_list[7], 'value': classify_list[7]},  
+                            ],
+                            value="印文",
+                            labelStyle={'display': 'block'}
+                        ),
+                        ]
+                )
 
 
 def classify_button():
@@ -76,41 +121,8 @@ def classify_button():
         id="classify_button_card",
         className = "classify_button_card",
         children=[
-            html.H2("Commuting Scenario"),
-            html.P("1. 选择主轴"),
-            dcc.RadioItems(
-                id='main_axis',
-                className="dcc_control",
-                options=[
-                    {'label': classify_list[0], 'value': classify_list[0]},
-                    {'label': classify_list[1], 'value': classify_list[1]},
-                    {'label': classify_list[2], 'value': classify_list[2]},
-                    {'label': classify_list[3], 'value': classify_list[3]},
-                    {'label': classify_list[4], 'value': classify_list[4]},
-                    {'label': classify_list[5], 'value': classify_list[5]},
-                    {'label': classify_list[6], 'value': classify_list[6]},
-                    {'label': classify_list[7], 'value': classify_list[7]},                   
-                ],
-                value="印文字数",
-                labelStyle={'display': 'block'}
-            ),
-            html.P("2. 选择副轴"),
-            dcc.RadioItems(
-                id='sub_axis',
-                className="dcc_control",
-                options=[
-                    {'label': classify_list[0], 'value': classify_list[0]},
-                    {'label': classify_list[1], 'value': classify_list[1]},
-                    {'label': classify_list[2], 'value': classify_list[2]},
-                    {'label': classify_list[3], 'value': classify_list[3]},
-                    {'label': classify_list[4], 'value': classify_list[4]},
-                    {'label': classify_list[5], 'value': classify_list[5]},
-                    {'label': classify_list[6], 'value': classify_list[6]},
-                    {'label': classify_list[7], 'value': classify_list[7]},  
-                ],
-                value="印文",
-                labelStyle={'display': 'block'}
-            ),
+            axis_1,
+            axis_2,
         ],
     )
 
@@ -146,17 +158,41 @@ def seal_num():
                                 html.P("可选印章数量"), 
                                 html.H3(id="seal_num_text"), 
                                 html.P("3. 选择印章"),
-                                dcc.Dropdown(
-                                    id='img_options',
-                                    options=[872,4253,4354,6,24],
-                                    value=872,
-                                    className="dcc_control",
-                                ),     
+                                # dcc.Dropdown(
+                                #     id='img_options_1',
+                                #     options=[872,4253,4354,6,24],
+                                #     value=872,
+                                #     className="dcc_control",
+                                # ),     
                             ],
                             className="mini_container",
                         )
                     ],
                 )
+
+
+img_selection_1 = html.Div(
+                    className="img_selection_1",
+                    children=[
+                                dcc.Dropdown(
+                                    id='img_options_1',
+                                    options=[872,4253,4354,6,24],
+                                    value=872,
+                                    className="dcc_control",
+                                ),  
+                                dcc.Graph(id="img_1", config={"displayModeBar": False, 'doubleClick': 'reset'}),
+                        ]
+                )
+
+
+mid_column_imgs = html.Div(
+                        className="mid_column_imgs",
+                        children=[
+                            img_selection_1,
+                            dcc.Graph(id="img_2", config={"displayModeBar": False, 'doubleClick': 'reset'}),
+                            ]
+                    )
+
 
 mid_column_graphs = html.Div(
                         className="mid_column_graphs",
@@ -170,6 +206,7 @@ mid_column_graphs = html.Div(
 left_column = html.Div(
                 className="left_column",
                 children=[
+                    html.H2("Commuting Scenario"),
                     classify_button(),
                     classify_dropdown(),
                     seal_num(),
@@ -187,7 +224,7 @@ right_column = html.Div(
 mid_column = html.Div(
                 className="mid_column",
                 children=[
-                    dcc.Graph(id="img", config={"displayModeBar": False, 'doubleClick': 'reset'}),
+                    mid_column_imgs,
                     mid_column_graphs,
                     ]
             )
@@ -445,7 +482,7 @@ def update_seal_num_text(main_axis,sub_axis,main_options,sub_options):
     [
         Input("main_axis", "value"),  
         Input("sub_axis", "value"),
-     ],
+    ],
     )
 def update_classify_graphic(main_axis, sub_axis):
     df = classify.groupby(by=[main_axis,sub_axis]).agg({"数量":"sum"}).reset_index()
@@ -472,10 +509,10 @@ def update_share_graphic(main_axis):
 @app.callback(
     Output('info_table', 'figure'),
     [
-        Input("img_options", "value"),  
+        Input("img_options_1", "value"),  
      ],
     )
-def update_share_graphic(img_options):
+def update_share_graphic(img_options_1):
     """
     https://plotly.com/python/table/
     """
@@ -519,13 +556,13 @@ def update_share_graphic(img_options):
 
 
 @app.callback(
-    Output('img', 'figure'),
-    Input('img_options', 'value')
+    Output('img_1', 'figure'),
+    Input('img_options_1', 'value')
     )
-def update_img(img_options):
+def update_img(img_options_1):
     fig = go.Figure()
 
-    img_id = int(img_options)
+    img_id = int(img_options_1)
     img_label = classify[classify['序号']==img_id]['简体'].unique()[0]
     img_fname = classify[classify['序号']==img_id]['文件名'].unique()[0]
     img_x = classify[classify['序号']==img_id]['img_x'].unique()[0]
@@ -534,7 +571,7 @@ def update_img(img_options):
     img_path = Image.open(img_path)
 
     # Constants
-    square = 400
+    square = 500
 
     # Add invisible scatter trace.
     # This trace is added to help the autoresize logic work.
@@ -578,14 +615,77 @@ def update_img(img_options):
     fig.update_layout(
         width=square,
         height=square,
-        margin={"l": 0, "r": 0, "t": 0, "b": 0},
-        plot_bgcolor="rgba(0, 0, 0, 1)",
-        paper_bgcolor="rgba(0, 0, 0, 1)",  
+        margin={"l": 10, "r": 10, "t": 10, "b": 10},
+        plot_bgcolor="rgba(0, 0, 0, 0)",
+        paper_bgcolor="rgba(0, 0, 0, 0)",  
     )
-
     return fig
 
+@app.callback(
+    Output('img_2', 'figure'),
+    Input('img_options_1', 'value')
+    )
+def update_img(img_options_1):
+    fig = go.Figure()
 
+    img_id = int(img_options_1)
+    img_label = classify[classify['序号']==img_id]['简体'].unique()[0]
+    img_fname = classify[classify['序号']==img_id]['文件名'].unique()[0]
+    img_x = classify[classify['序号']==img_id]['img_x'].unique()[0]
+    img_y = classify[classify['序号']==img_id]['img_y'].unique()[0]
+    img_path = "../png_crop/" + str(img_fname)
+    img_path = Image.open(img_path)
+
+    # Constants
+    square = 500
+
+    # Add invisible scatter trace.
+    # This trace is added to help the autoresize logic work.
+    fig.add_trace(go.Scatter(x=[0, square],y=[0, square],mode="markers",marker_opacity=0))
+
+    # Configure axes
+    fig.update_xaxes(visible=False, range=[0, square] )
+    fig.update_yaxes(visible=False, range=[0, square], scaleanchor="x" )
+
+    if img_x >= img_y:
+        # Add image
+        fig.add_layout_image(
+            dict(
+                x=0,
+                y=(square+(square/img_x)*img_y)/2,
+                sizex=square,
+                sizey=(square/img_x)*img_y,
+                xref="x",
+                yref="y",
+                opacity=1.0,
+                layer="below",
+                sizing="stretch",
+                source=img_path)
+        )
+    else:
+        fig.add_layout_image(
+            dict(
+                x=(square-(square/img_y)*img_x)/2,
+                y=square,
+                sizex=(square/img_y)*img_x,
+                sizey=square,
+                xref="x",
+                yref="y",
+                opacity=1.0,
+                layer="below",
+                sizing="stretch",
+                source=img_path)
+        )    
+
+    # Configure other layout
+    fig.update_layout(
+        width=square,
+        height=square,
+        margin={"l": 10, "r": 10, "t": 10, "b": 10},
+        plot_bgcolor="rgba(0, 0, 0, 0)",
+        paper_bgcolor="rgba(0, 0, 0, 0)",  
+    )
+    return fig
 
 
 

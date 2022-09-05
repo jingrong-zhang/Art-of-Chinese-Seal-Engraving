@@ -92,7 +92,6 @@ p {
   padding: 2rem, 2rem, 2rem, 2rem;
   width: 100%;
   height: 5rem;
-  margin-bottom: 1rem;
 }
 
 .banner h2 {
@@ -121,14 +120,67 @@ p {
 .left_column {
   width: 20%;
   background-color: yellow;
+  padding-top: 1rem;
+}
+
+.classify_button_card {
+  width: 100%;
+  background-color: darkgrey;
+  display: flex;
+  gap: 15px;
+}
+
+.axis_1 {
+  width: 50%;
+}
+
+.axis_2 {
+  width: 50%;
 }
 
 .right_column {
   width: 20%;
   background-color: blue;
+  padding-top: 1rem;
 }
 
 .mid_column {
   width: 60%;
   background-color: paleturquoise;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-top: 1rem;
+}
+
+.mid_column_imgs {
+  width: 100%;
+  background-color: darkgrey;
+  display: flex;
+  gap: 15px;
+}
+
+#img_selection_1 {
+  width: 50%;
+}
+
+#img_2 {
+  width: 50%;
+}
+
+.mid_column_graphs {
+  width: 100%;
+  background-color: red;
+  display: flex;
+  gap: 15px;
+}
+
+#classify_graphic {
+  width: 50%;
+  height: 350px;
+}
+
+#share_graphic {
+  width: 50%;
+  height: 350px;
 }
