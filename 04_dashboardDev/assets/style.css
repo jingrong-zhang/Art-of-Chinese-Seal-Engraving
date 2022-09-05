@@ -7,7 +7,7 @@
 
 body {
   background-color: #f2f2f2;
-  zoom: 50%;
+  zoom: 100%;
 }
 
 /* font
@@ -411,15 +411,15 @@ label {
 }
 
 /* For devices larger than 1200px */
-@media (min-width: 1000px) {
+/* @media (min-width: 1000px) {
   body {
     zoom: 80%;
   }
-}
+} */
 
 /* For devices larger than 1500px */
-@media (min-width: 1700px) {
+/* @media (min-width: 1700px) {
   body {
     zoom: 100%;
   }
-}
+} */
