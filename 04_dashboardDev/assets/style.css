@@ -7,6 +7,7 @@
 
 body {
   background-color: #fcfaf2;
+  zoom: 50%;
 }
 
 /* font
@@ -35,6 +36,7 @@ h2 {
   color: lightgray;
   font-size: 26px;
   margin-bottom: 18px;
+  font-family: "Times New Roman", Times, serif;
 }
 h3 {
   color: #ab3b3a;
@@ -43,6 +45,8 @@ h3 {
   font-weight: 500;
   margin-bottom: 10px;
   margin-top: 15px;
+  text-shadow: #9f9f9f;
+  font-family: "Times New Roman", Times, serif;
 }
 h4 {
   color: #2f2f2f;
@@ -147,18 +151,43 @@ p {
   width: 50%;
 }
 
-.img_options {
+.img_titlebar_1 {
   width: 100%;
   display: flex;
-  gap: 15px;
+}
+
+.img_titlebar_2 {
+  width: 100%;
+  display: flex;
 }
 
 .img_options_1 {
-  width: 50%;
+  width: 20%;
+  align-self: center;
+  margin-left: auto;
 }
 
 .img_options_2 {
-  width: 50%;
+  width: 20%;
+  align-self: center;
+  margin-left: auto;
+}
+
+.graphic_titlebar_1,
+.graphic_titlebar_2 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.seal_num {
+  width: 100%;
+  display: flex;
+}
+
+.seal_num :last-child {
+  align-self: center;
+  padding-left: 5px;
 }
 
 .right_column {
@@ -204,6 +233,11 @@ p {
   box-shadow: 2px 2px 2px lightgrey;
 }
 
+.graphic_border {
+  background-color: #fcfaf2;
+  border-radius: 5px;
+}
+
 .mid_column_graphs {
   width: 100%;
   display: flex;
@@ -235,4 +269,91 @@ p {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 1rem;
+}
+
+#info_table_1 {
+  height: 420px;
+}
+
+#info_table_2 {
+  height: 150px;
+}
+
+/* Special purpose buttons
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.reset-button {
+  width: 100%;
+  margin-top: 10px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.info-icon {
+  float: right;
+  cursor: pointer;
+  height: 1.2rem;
+}
+
+.mid_column .info-icon {
+  margin-right: 1rem;
+}
+
+/* Modal info layer
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.modal {
+  position: fixed;
+  z-index: 1002; /* Sit on top, including modebar which has z=1001 */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+}
+
+.modal-title {
+  color: white;
+}
+
+.modal-content {
+  z-index: 1004; /* Sit on top, including modebar which has z=1001 */
+  position: fixed;
+  left: 0;
+  width: 60%;
+  background-color: #ab3b3a;
+  color: white;
+  border-radius: 5px;
+  margin-left: 20%;
+  margin-bottom: 2%;
+  margin-top: 2%;
+}
+
+.modal-content p {
+  color: white;
+}
+
+.modal-content > div {
+  text-align: left;
+  margin: 15px;
+}
+
+.modal-content.bottom {
+  bottom: 0;
+}
+
+.modal-content.top {
+  top: 0;
+}
+
+/* For devices larger than 1200px */
+@media (min-width: 1000px) {
+  body {
+    zoom: 80%;
+  }
+}
+
+/* For devices larger than 1500px */
+@media (min-width: 1700px) {
+  body {
+    zoom: 100%;
+  }
 }
