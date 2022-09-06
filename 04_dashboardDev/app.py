@@ -24,11 +24,66 @@ app.config.suppress_callback_exceptions = True
 
 
 # #########################################
+# ##############  format  #################
+# #########################################
+
+layout = dict(
+    margin=dict(l=20, r=20, b=20, t=20),
+    hovermode="closest",
+    plot_bgcolor="rgba(0, 0, 0, 0)",
+    paper_bgcolor="rgba(0, 0, 0, 0)",
+    legend=dict(font=dict(size=12), orientation="v"),
+    yaxis = dict(tickfont = dict(size=12)),
+    xaxis = dict(tickfont = dict(size=12)),
+)
+
+color__dict = {
+                '图画印':'#636EFA',
+                '边款':'#EF553B',
+                '口':'#00CC96',
+                '口口':'#AB63FA',
+                '日':'#FFA15A',
+                '田':'#19D3F3',
+                '口口口':'#FF6692',
+                '圆':'#B6E880',
+                '圆+方':'#FF97FF',
+                '日日日':'#FECB52',
+                '井':'#7F7F7F',
+                '亚':'#72B7B2',
+                '特殊':'lightgrey',
+                '日+口':'lightgrey',
+                '1':'lightgrey',
+                '2':'lightgrey',
+                '3':'lightgrey',
+                '4':'lightgrey',
+                '5':'lightgrey',
+                '6':'lightgrey',
+                '7':'lightgrey',
+                '8':'lightgrey',
+                '9':'lightgrey',
+                '>=10':'lightgrey',
+                '方形':'lightgrey',
+                '长方形':'lightgrey',
+                '椭圆形':'lightgrey',
+                '多个':'lightgrey',
+                '三角形':'lightgrey',
+                '其他':'lightgrey',
+                '白文':'#9f9f9f',
+                '朱文':'#ab3b3a',
+                '朱白相间文':'#3A8FB7',
+                '姓名印':'lightgrey',
+                '收藏鉴赏印':'lightgrey',
+                '斋馆别号印':'lightgrey',
+                '书简印':'lightgrey',
+                '无':'lightgrey',
+                '*':'black',
+                }
+
+# #########################################
 # #######  read the orginal data  #########
 # #########################################
 
 classify = pd.read_csv(f"../03_LabelProcessing/classification.csv",index_col=0)
-
 classify_list = ['作者', '图画印', '边款', '边框', '印文字数', '印形', '印文', '印面内容']
 
 
@@ -164,6 +219,42 @@ def classify_dropdown():
         ],
     )
 
+img_options_1 = html.Div(
+                    className="img_options_1",
+                    children=[
+                                html.H4("印章一"),
+                                dcc.Dropdown(
+                                    id='img_options_1',
+                                    options=[872,4253,4354,6,24],
+                                    value=872,
+                                    className="dcc_control",
+                                    clearable=False,
+                                ),   
+                        ]
+                )
+
+img_options_2 = html.Div(
+                    className="img_options_2",
+                    children=[
+                                html.H4("印章二"),   
+                                dcc.Dropdown(
+                                    id='img_options_2',
+                                    options=[872,4253,4354,6,24],
+                                    value=4354,
+                                    className="dcc_control",
+                                    clearable=False,
+                                ),     
+                        ]
+                )
+
+img_options = html.Div(
+                    className="img_options",
+                    children=[
+                                img_options_1,   
+                                img_options_2,  
+                        ]
+                )
+
 
 def seal_num():
     return html.Div(
@@ -171,23 +262,18 @@ def seal_num():
                     children=[
                         html.Div(
                             [
-                                html.H3("过滤结果：可选印章数量"),
+                                html.H3("过滤结果 - 可选印章数量"),
                                 html.H2(id="seal_num_text"), 
                                 html.H3("3. 选择印章"),
-                                html.H4("印章一"),
-                                dcc.Dropdown(
-                                    id='img_options_1',
-                                    options=[872,4253,4354,6,24],
-                                    value=872,
+                                dcc.RadioItems(
+                                    id='img_options_choice',
                                     className="dcc_control",
-                                ),   
-                                html.H4("印章二"),   
-                                dcc.Dropdown(
-                                    id='img_options_2',
-                                    options=[872,4253,4354,6,24],
-                                    value=872,
-                                    className="dcc_control",
-                                ),                                  
+                                    options=['完整数据库','过滤结果'],
+                                    value='完整数据库',
+                                    labelStyle={'display': 'block'},
+                                ),
+                                html.Br(),
+                                img_options,                              
                             ],
                             className="mini_container",
                         )
@@ -222,7 +308,7 @@ mid_column_imgs = html.Div(
 classify_graphic = html.Div(
                         className="classify_graphic",
                         children=[
-                            html.H3("可选印章数量"), 
+                            html.H3(id="classify_graphic_title"), 
                             dcc.Graph(id="classify_graphic", config={"displayModeBar": False}),
                             ]
                     )
@@ -230,7 +316,7 @@ classify_graphic = html.Div(
 share_graphic = html.Div(
                         className="share_graphic",
                         children=[
-                            html.H3("可选印章数量"), 
+                            html.H3(id="share_graphic_title"), 
                             dcc.Graph(id="share_graphic", config={"displayModeBar": False}),
                             ]
                     )
@@ -250,9 +336,12 @@ left_column = html.Div(
                 children=[
                     html.H3("1. 选择过滤类别"),
                     classify_button(),
+                    html.Br(),
                     html.H3("2. 选择过滤具体条件"),
                     classify_dropdown(),
+                    html.Br(),
                     seal_num(),
+                    html.Br(),
                     ]
             )
 
@@ -536,7 +625,12 @@ def update_seal_num_text(main_axis,sub_axis,main_options,sub_options):
 def update_classify_graphic(main_axis, sub_axis):
     df = classify.groupby(by=[main_axis,sub_axis]).agg({"数量":"sum"}).reset_index()
     df.sort_values(by=main_axis, ascending=True, inplace=True)
-    fig = px.bar(df, x=main_axis, y="数量", color=sub_axis)
+    fig = px.bar(df, 
+                x=main_axis, 
+                y="数量", 
+                color=sub_axis, 
+                color_discrete_map=color__dict)
+    fig.update_layout(layout)  
     return fig
 
 
@@ -546,32 +640,41 @@ def update_classify_graphic(main_axis, sub_axis):
     )
 def update_share_graphic(main_axis):
     column_y = main_axis
-    fig = px.histogram(classify, x="朱色比例", y="数量",color="印文",
-                   marginal="box", # box or violin, rug
-                   opacity = 0.7,
-                   nbins = 50,
-                   barmode = "overlay")
+    fig = px.histogram(classify, 
+                        x="朱色比例", 
+                        color="印文",
+                        marginal="box", # box or violin, rug
+                        opacity = 0.7,
+                        nbins = 50,
+                        color_discrete_map=color__dict, 
+                        barmode = "overlay")
+    fig.update_layout(layout)  
     return fig
 
 
 @app.callback(
     Output('info_table_1', 'figure'),
     [
-        Input("img_options_1", "value"),  
+        Input("img_options_1", "value"), 
+        Input("img_options_2", "value"),  
     ],
     )
-def update_share_graphic(img_options_1):
+def update_share_graphic(img_options_1,img_options_2):
     """
     https://plotly.com/python/table/
     """
     dictfilt = lambda x, y: dict([ (i,x[i]) for i in x if i in set(y)])
-    my_dict = classify[classify['序号']==1].to_dict(orient='records')[0]
     wanted_keys = ("简体","繁体","作者","图画印","边款","边框","印文字数","印形","印文","印面内容","朱色比例")
-    new_dict = dictfilt(my_dict, wanted_keys)
 
-    first_column = list(new_dict.keys())
-    second_column = list(new_dict.values())
-    third_column = list(new_dict.values())
+    my_dict_1 = classify[classify['序号']==int(img_options_1)].to_dict(orient='records')[0]
+    new_dict_1 = dictfilt(my_dict_1, wanted_keys)
+
+    my_dict_2 = classify[classify['序号']==int(img_options_2)].to_dict(orient='records')[0]
+    new_dict_2 = dictfilt(my_dict_2, wanted_keys)
+
+    first_column = list(new_dict_1.keys())
+    second_column = list(new_dict_1.values())
+    third_column = list(new_dict_2.values())
     values = [first_column, second_column, third_column]
 
     fig = go.Figure(data=[go.Table(
@@ -588,7 +691,7 @@ def update_share_graphic(img_options_1):
     cells=dict(
         values=values,
         line_color='darkslategray',
-        fill=dict(color=['white', 'white', 'white']),
+        fill=dict(color=['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)']),
         align=['left','left','left'],
         font_size=12,
         height=25)
@@ -596,7 +699,7 @@ def update_share_graphic(img_options_1):
     ])
 
     fig.update_layout(
-        margin={"l": 20, "r": 20, "t": 0, "b": 0},
+        margin={"l": 0, "r": 0, "t": 0, "b": 0},
         plot_bgcolor="rgba(0, 0, 0, 0)",
         paper_bgcolor="rgba(0, 0, 0, 0)",  
     )
@@ -621,7 +724,7 @@ def update_img(img_options_1):
     img_path = Image.open(img_path)
 
     # Constants
-    square = 500
+    square = 460
 
     # Add invisible scatter trace.
     # This trace is added to help the autoresize logic work.
@@ -665,7 +768,7 @@ def update_img(img_options_1):
     fig.update_layout(
         width=square,
         height=square,
-        margin={"l": 10, "r": 10, "t": 10, "b": 10},
+        margin={"l": 30, "r": 30, "t": 30, "b": 30},
         plot_bgcolor="rgba(0, 0, 0, 0)",
         paper_bgcolor="rgba(0, 0, 0, 0)",  
     )
@@ -673,12 +776,12 @@ def update_img(img_options_1):
 
 @app.callback(
     Output('img_2', 'figure'),
-    Input('img_options_1', 'value')
+    Input('img_options_2', 'value')
     )
-def update_img(img_options_1):
+def update_img(img_options_2):
     fig = go.Figure()
 
-    img_id = int(img_options_1)
+    img_id = int(img_options_2)
     img_label = classify[classify['序号']==img_id]['简体'].unique()[0]
     img_fname = classify[classify['序号']==img_id]['文件名'].unique()[0]
     img_x = classify[classify['序号']==img_id]['img_x'].unique()[0]
@@ -687,7 +790,7 @@ def update_img(img_options_1):
     img_path = Image.open(img_path)
 
     # Constants
-    square = 500
+    square = 460
 
     # Add invisible scatter trace.
     # This trace is added to help the autoresize logic work.
@@ -731,7 +834,7 @@ def update_img(img_options_1):
     fig.update_layout(
         width=square,
         height=square,
-        margin={"l": 10, "r": 10, "t": 10, "b": 10},
+        margin={"l": 30, "r": 30, "t": 30, "b": 30},
         plot_bgcolor="rgba(0, 0, 0, 0)",
         paper_bgcolor="rgba(0, 0, 0, 0)",  
     )
@@ -746,7 +849,7 @@ def update_seal_num_text(img_options_1):
     img_id = int(img_options_1)
     img_label = classify[classify['序号']==img_id]['简体'].unique()[0]
     img_onwer = classify[classify['序号']==img_id]['作者'].unique()[0]
-    return [img_label + "-" + img_onwer]
+    return [img_label + " - " + img_onwer]
 
 
 @app.callback(
@@ -757,7 +860,7 @@ def update_seal_num_text(img_options_2):
     img_id = int(img_options_2)
     img_label = classify[classify['序号']==img_id]['简体'].unique()[0]
     img_onwer = classify[classify['序号']==img_id]['作者'].unique()[0]
-    return [img_label + "-" + img_onwer]
+    return [img_label + " - " + img_onwer]
 
 
 @app.callback(
@@ -775,14 +878,22 @@ def update_seal_num_text(main_axis):
 def update_seal_num_text(sub_axis):
     return [sub_axis]
 
+@app.callback(
+    Output("classify_graphic_title", "children"),
+    [
+        Input("main_axis", "value"), 
+        Input("sub_axis", "value"), 
+    ]
+    )
+def update_seal_num_text(main_axis,sub_axis):
+    return ["基于 ["+main_axis+"] 和 ["+sub_axis+"] 对印章数据库进行交叉分析"]
 
-
-
-
-
-
-
-
+@app.callback(
+    Output("share_graphic_title", "children"),
+    Input("main_axis", "value"),
+    )
+def update_seal_num_text(main_axis):
+    return ["基于 ["+main_axis+"] 的印章朱色比例分布"]
 
 
 # Run the server

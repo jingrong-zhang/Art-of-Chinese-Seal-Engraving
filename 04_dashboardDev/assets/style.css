@@ -34,12 +34,12 @@ h2 {
   font-size: 26px;
   margin-bottom: 18px;
 }
-
 h3 {
   color: #97151c;
   font-size: 20px;
   font-weight: 500;
-  margin: 5px 0px;
+  margin-bottom: 10px;
+  margin-top: 15px;
 }
 h4 {
   color: black;
@@ -112,7 +112,6 @@ p {
 
 .left_column {
   width: 20%;
-  padding: 1.2rem;
 }
 
 .classify_button_card {
@@ -143,10 +142,23 @@ p {
   width: 50%;
 }
 
+.img_options {
+  width: 100%;
+  display: flex;
+  gap: 15px;
+}
+
+.img_options_1 {
+  width: 50%;
+}
+
+.img_options_2 {
+  width: 50%;
+}
+
 .right_column {
   width: 20%;
   background-color: blue;
-  padding-top: 1rem;
 }
 
 .mid_column {
@@ -156,6 +168,10 @@ p {
   flex-direction: column;
   gap: 15px;
   padding-top: 1rem;
+}
+
+.mid_column h3 {
+  padding-left: 1.2rem;
 }
 
 .mid_column_imgs {
@@ -185,7 +201,7 @@ p {
 
 .mid_column_graphs {
   width: 100%;
-  background-color: red;
+  /* background-color: red; */
   display: flex;
   gap: 15px;
 }
@@ -197,7 +213,7 @@ p {
 }
 
 #classify_graphic {
-  height: 320px;
+  height: 280px;
 }
 
 .share_graphic {
@@ -207,9 +223,12 @@ p {
 }
 
 #share_graphic {
-  height: 320px;
+  height: 280px;
 }
 
 .sides {
   background-color: #c5c5c5;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
 }
