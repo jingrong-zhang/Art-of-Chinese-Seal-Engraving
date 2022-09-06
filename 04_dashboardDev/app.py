@@ -11,6 +11,8 @@ import numpy as np
 from pandas.api.types import CategoricalDtype
 from textwrap import dedent
 from PIL import Image
+import requests
+from io import BytesIO
 
 
 app = dash.Dash(
@@ -40,9 +42,9 @@ layout = dict(
 )
 
 color__dict = {
-                '图画印':'#636EFA',
-                '边款':'#EF553B',
-                '口':'#00CC96',
+                '图画印':'#ab3b3a',
+                '边款':'#ab3b3a',
+                '口':'#ab3b3a',
                 '口口':'#AB63FA',
                 '日':'#FFA15A',
                 '田':'#19D3F3',
@@ -57,28 +59,29 @@ color__dict = {
                 '1':'lightgrey',
                 '2':'lightgrey',
                 '3':'lightgrey',
-                '4':'lightgrey',
+                '4':'#ab3b3a',
                 '5':'lightgrey',
                 '6':'lightgrey',
                 '7':'lightgrey',
                 '8':'lightgrey',
                 '9':'lightgrey',
                 '>=10':'lightgrey',
-                '方形':'lightgrey',
-                '长方形':'lightgrey',
-                '椭圆形':'lightgrey',
-                '多个':'lightgrey',
-                '三角形':'lightgrey',
+                '方形':'#9f9f9f',
+                '长方形':'#ab3b3a',
+                '椭圆形':'#F7C242',
+                '圆形':'#E98B2A',
+                '多个':'#3A8FB7',
+                '三角形':'#BEC23F',
                 '其他':'lightgrey',
                 '白文':'#9f9f9f',
                 '朱文':'#ab3b3a',
                 '朱白相间文':'#3A8FB7',
-                '姓名印':'lightgrey',
+                '姓名印':'#ab3b3a',
                 '收藏鉴赏印':'lightgrey',
                 '斋馆别号印':'lightgrey',
                 '书简印':'lightgrey',
-                '无':'lightgrey',
-                '*':'black',
+                '无':'#9f9f9f',
+                '*':'#9f9f9f',
                 }
 
 # #########################################
@@ -87,7 +90,7 @@ color__dict = {
 
 classify = pd.read_csv(f"../03_LabelProcessing/classification.csv",index_col=0)
 classify_list = ['作者', '图画印', '边款', '边框', '印文字数', '印形', '印文', '印面内容']
-
+img_db_path = 'https://raw.githubusercontent.com/jingrong-zhang/Seals_Database/main/img/'
 
 # #################################################
 # #########  generate dashboard card  #############
@@ -723,8 +726,9 @@ def update_img(img_options_1):
     img_fname = classify[classify['序号']==img_id]['文件名'].unique()[0]
     img_x = classify[classify['序号']==img_id]['img_x'].unique()[0]
     img_y = classify[classify['序号']==img_id]['img_y'].unique()[0]
-    img_path = "../png_crop/" + str(img_fname)
-    img_path = Image.open(img_path)
+    img_url = img_db_path + str(img_fname)
+    response = requests.get(img_url)
+    img_path = Image.open(BytesIO(response.content))
 
     # Constants
     square = 460
@@ -789,8 +793,9 @@ def update_img(img_options_2):
     img_fname = classify[classify['序号']==img_id]['文件名'].unique()[0]
     img_x = classify[classify['序号']==img_id]['img_x'].unique()[0]
     img_y = classify[classify['序号']==img_id]['img_y'].unique()[0]
-    img_path = "../png_crop/" + str(img_fname)
-    img_path = Image.open(img_path)
+    img_url = img_db_path + str(img_fname)
+    response = requests.get(img_url)
+    img_path = Image.open(BytesIO(response.content))
 
     # Constants
     square = 460
