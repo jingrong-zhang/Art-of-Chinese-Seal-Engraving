@@ -35,18 +35,11 @@ h2 {
   margin-bottom: 18px;
 }
 
-.control_card h2 {
-  color: #97151c;
-  font-size: 16px;
-  margin-top: 30px;
-  margin-bottom: 14px;
-}
-
 h3 {
-  color: black;
+  color: #97151c;
   font-size: 20px;
   font-weight: 500;
-  margin: 8px 0px;
+  margin: 5px 0px;
 }
 h4 {
   color: black;
@@ -88,13 +81,13 @@ p {
 /* banner
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .banner {
-  background-color: #000000;
+  background-color: #ab3b3a;
   padding: 2rem, 2rem, 2rem, 2rem;
   width: 100%;
   height: 5rem;
 }
 
-.banner h2 {
+.banner h1 {
   color: #ffffff;
   display: inline-block;
   font-size: 2.2rem;
@@ -119,13 +112,11 @@ p {
 
 .left_column {
   width: 20%;
-  background-color: yellow;
-  padding-top: 1rem;
+  padding: 1.2rem;
 }
 
 .classify_button_card {
   width: 100%;
-  background-color: darkgrey;
   display: flex;
   gap: 15px;
 }
@@ -138,6 +129,20 @@ p {
   width: 50%;
 }
 
+.classify_dropdown_card {
+  width: 100%;
+  display: flex;
+  gap: 15px;
+}
+
+.main_options {
+  width: 50%;
+}
+
+.sub_options {
+  width: 50%;
+}
+
 .right_column {
   width: 20%;
   background-color: blue;
@@ -146,7 +151,7 @@ p {
 
 .mid_column {
   width: 60%;
-  background-color: paleturquoise;
+  /* background-color: paleturquoise; */
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -155,17 +160,27 @@ p {
 
 .mid_column_imgs {
   width: 100%;
-  background-color: darkgrey;
   display: flex;
   gap: 15px;
 }
 
-#img_selection_1 {
+.img_selection_1 {
   width: 50%;
+  align-self: center;
 }
 
-#img_2 {
+.img_selection_2 {
   width: 50%;
+  /* align-self: center; */
+}
+
+.img_border {
+  background-color: #fcfaf2;
+  border: #828282;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px lightgrey;
 }
 
 .mid_column_graphs {
@@ -175,12 +190,26 @@ p {
   gap: 15px;
 }
 
-#classify_graphic {
+.classify_graphic {
   width: 50%;
-  height: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+#classify_graphic {
+  height: 320px;
+}
+
+.share_graphic {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
 }
 
 #share_graphic {
-  width: 50%;
-  height: 350px;
+  height: 320px;
+}
+
+.sides {
+  background-color: #c5c5c5;
 }

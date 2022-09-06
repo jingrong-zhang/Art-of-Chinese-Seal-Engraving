@@ -44,7 +44,7 @@ def banner():
             html.Div(
                 className="banner",
                 children=[
-                    html.H2(
+                    html.H1(
                         id="banner_title",
                         children=[
                             html.A(
@@ -69,7 +69,7 @@ def banner():
 axis_1 = html.Div(
                     className="axis_1",
                     children=[
-                        html.P("1. 选择主轴"),
+                        html.P("类别一"),
                         dcc.RadioItems(
                             id='main_axis',
                             className="dcc_control",
@@ -83,7 +83,7 @@ axis_1 = html.Div(
                                 {'label': classify_list[6], 'value': classify_list[6]},
                                 {'label': classify_list[7], 'value': classify_list[7]},                   
                             ],
-                            value="印文字数",
+                            value="印形",
                             labelStyle={'display': 'block'}
                         ),
                         ]
@@ -92,7 +92,7 @@ axis_1 = html.Div(
 axis_2 = html.Div(
                     className="axis_1",
                     children=[
-                        html.P("2. 选择副轴"),
+                        html.P("类别二"),
                         dcc.RadioItems(
                             id='sub_axis',
                             className="dcc_control",
@@ -126,6 +126,31 @@ def classify_button():
         ],
     )
 
+main_options = html.Div(
+                    className="main_options",
+                    children=[
+                            html.P(id='class_1_text'),
+                            dcc.RadioItems(
+                                id='main_options',
+                                className="dcc_control",
+                                labelStyle={'display': 'block'},
+                            ), 
+                        ]
+                )
+
+sub_options = html.Div(
+                    className="sub_options",
+                    children=[
+                            html.P(id='class_2_text'),
+                            dcc.RadioItems(
+                                id='sub_options',
+                                className="dcc_control",
+                                labelStyle={'display': 'block'},
+                            ),
+                        ]
+                )
+
+
 def classify_dropdown():
     """
     https://dash.plotly.com/dash-core-components/dropdown
@@ -134,17 +159,8 @@ def classify_dropdown():
         id="classify_dropdown_card",
         className = "classify_dropdown_card",
         children=[
-            html.H2("Commuting Scenario"),
-            html.P("1. 选择主轴"),
-            dcc.Dropdown(
-                id='main_options',
-                className="dcc_control",
-            ),
-            html.P("2. 选择副轴"),
-            dcc.Dropdown(
-                id='sub_options',
-                className="dcc_control",
-            ),
+            main_options,
+            sub_options,
         ],
     )
 
@@ -155,15 +171,23 @@ def seal_num():
                     children=[
                         html.Div(
                             [
-                                html.P("可选印章数量"), 
-                                html.H3(id="seal_num_text"), 
-                                html.P("3. 选择印章"),
-                                # dcc.Dropdown(
-                                #     id='img_options_1',
-                                #     options=[872,4253,4354,6,24],
-                                #     value=872,
-                                #     className="dcc_control",
-                                # ),     
+                                html.H3("过滤结果：可选印章数量"),
+                                html.H2(id="seal_num_text"), 
+                                html.H3("3. 选择印章"),
+                                html.H4("印章一"),
+                                dcc.Dropdown(
+                                    id='img_options_1',
+                                    options=[872,4253,4354,6,24],
+                                    value=872,
+                                    className="dcc_control",
+                                ),   
+                                html.H4("印章二"),   
+                                dcc.Dropdown(
+                                    id='img_options_2',
+                                    options=[872,4253,4354,6,24],
+                                    value=872,
+                                    className="dcc_control",
+                                ),                                  
                             ],
                             className="mini_container",
                         )
@@ -172,24 +196,42 @@ def seal_num():
 
 
 img_selection_1 = html.Div(
-                    className="img_selection_1",
+                    className="img_selection_1 img_border",
                     children=[
-                                dcc.Dropdown(
-                                    id='img_options_1',
-                                    options=[872,4253,4354,6,24],
-                                    value=872,
-                                    className="dcc_control",
-                                ),  
+                                html.H3(id="seal_1_title_text"), 
                                 dcc.Graph(id="img_1", config={"displayModeBar": False, 'doubleClick': 'reset'}),
                         ]
                 )
 
+img_selection_2 = html.Div(
+                    className="img_selection_2 img_border",
+                    children=[
+                                html.H3(id="seal_2_title_text"), 
+                                dcc.Graph(id="img_2", config={"displayModeBar": False, 'doubleClick': 'reset'}),
+                        ]
+                )
 
 mid_column_imgs = html.Div(
                         className="mid_column_imgs",
                         children=[
                             img_selection_1,
-                            dcc.Graph(id="img_2", config={"displayModeBar": False, 'doubleClick': 'reset'}),
+                            img_selection_2,
+                            ]
+                    )
+
+classify_graphic = html.Div(
+                        className="classify_graphic",
+                        children=[
+                            html.H3("可选印章数量"), 
+                            dcc.Graph(id="classify_graphic", config={"displayModeBar": False}),
+                            ]
+                    )
+
+share_graphic = html.Div(
+                        className="share_graphic",
+                        children=[
+                            html.H3("可选印章数量"), 
+                            dcc.Graph(id="share_graphic", config={"displayModeBar": False}),
                             ]
                     )
 
@@ -197,27 +239,28 @@ mid_column_imgs = html.Div(
 mid_column_graphs = html.Div(
                         className="mid_column_graphs",
                         children=[
-                            dcc.Graph(id="classify_graphic", config={"displayModeBar": False}),
-                            dcc.Graph(id="share_graphic", config={"displayModeBar": False}),
+                            classify_graphic,
+                            share_graphic,
                             ]
                     )
 
 
 left_column = html.Div(
-                className="left_column",
+                className="left_column sides",
                 children=[
-                    html.H2("Commuting Scenario"),
+                    html.H3("1. 选择过滤类别"),
                     classify_button(),
+                    html.H3("2. 选择过滤具体条件"),
                     classify_dropdown(),
                     seal_num(),
                     ]
             )
 
 right_column = html.Div(
-                className="right_column",
+                className="right_column sides",
                 children=[
-                    html.H2("可选印章数量"), 
-                    dcc.Graph(id="info_table", config={"displayModeBar": False}),
+                    html.H3("可选印章数量"), 
+                    dcc.Graph(id="info_table_1", config={"displayModeBar": False}),                
                     ]
             )
 
@@ -446,21 +489,27 @@ def disable_options(sub_axis):
 
 
 @app.callback(
-    Output('main_options', 'options'),
+    [
+        Output('main_options', 'options'),
+        Output('main_options', 'value'),
+    ],
     Input('main_axis', 'value')
     )
 def update_main_options(main_axis):
     main_options = classify[main_axis].unique().tolist()
-    return main_options
+    return main_options, main_options[0]
 
 
 @app.callback(
-    Output('sub_options', 'options'),
+    [
+        Output('sub_options', 'options'), 
+        Output('sub_options', 'value'),
+    ],
     Input('sub_axis', 'value')
     )
 def update_sub_options(sub_axis):
     sub_options = classify[sub_axis].unique().tolist()
-    return sub_options
+    return sub_options, sub_options[0]
 
 
 @app.callback(
@@ -493,24 +542,23 @@ def update_classify_graphic(main_axis, sub_axis):
 
 @app.callback(
     Output('share_graphic', 'figure'),
-    [
-        Input("main_axis", "value"),  
-     ],
+    Input("main_axis", "value"), 
     )
 def update_share_graphic(main_axis):
-    fig = px.histogram(classify, x="朱色比例", color="印文",
+    column_y = main_axis
+    fig = px.histogram(classify, x="朱色比例", y="数量",color="印文",
                    marginal="box", # box or violin, rug
                    opacity = 0.7,
                    nbins = 50,
                    barmode = "overlay")
     return fig
 
-# info_table
+
 @app.callback(
-    Output('info_table', 'figure'),
+    Output('info_table_1', 'figure'),
     [
         Input("img_options_1", "value"),  
-     ],
+    ],
     )
 def update_share_graphic(img_options_1):
     """
@@ -523,24 +571,25 @@ def update_share_graphic(img_options_1):
 
     first_column = list(new_dict.keys())
     second_column = list(new_dict.values())
-    values = [first_column, second_column]
+    third_column = list(new_dict.values())
+    values = [first_column, second_column, third_column]
 
     fig = go.Figure(data=[go.Table(
-    columnorder = [1,2],
-    columnwidth = [30,60],
+    columnorder = [1,2,3],
+    columnwidth = [30,60,60],
     header = dict(
-        values = [['<b>属性</b>'],['<b>内容</b>']],
+        values = [['<b>属性</b>'],['<b>印章（左）</b>'],['<b>印章（右）</b>']],
         line_color='darkslategray',
         fill_color='black',
-        align=['left','center'],
+        align=['center','center','center'],
         font=dict(color='white', size=12),
         height=30
     ),
     cells=dict(
         values=values,
         line_color='darkslategray',
-        fill=dict(color=['white', 'white']),
-        align=['left', 'center'],
+        fill=dict(color=['white', 'white', 'white']),
+        align=['left','left','left'],
         font_size=12,
         height=25)
         )
@@ -553,6 +602,7 @@ def update_share_graphic(img_options_1):
     )
 
     return fig
+
 
 
 @app.callback(
@@ -688,17 +738,42 @@ def update_img(img_options_1):
     return fig
 
 
+@app.callback(
+    Output("seal_1_title_text", "children"),
+    Input("img_options_1", "value"), 
+    )
+def update_seal_num_text(img_options_1):
+    img_id = int(img_options_1)
+    img_label = classify[classify['序号']==img_id]['简体'].unique()[0]
+    img_onwer = classify[classify['序号']==img_id]['作者'].unique()[0]
+    return [img_label + "-" + img_onwer]
 
 
+@app.callback(
+    Output("seal_2_title_text", "children"),
+    Input("img_options_2", "value"), 
+    )
+def update_seal_num_text(img_options_2):
+    img_id = int(img_options_2)
+    img_label = classify[classify['序号']==img_id]['简体'].unique()[0]
+    img_onwer = classify[classify['序号']==img_id]['作者'].unique()[0]
+    return [img_label + "-" + img_onwer]
 
 
+@app.callback(
+    Output("class_1_text", "children"),
+    Input("main_axis", "value"), 
+    )
+def update_seal_num_text(main_axis):
+    return [main_axis]
 
 
-
-
-
-
-
+@app.callback(
+    Output("class_2_text", "children"),
+    Input("sub_axis", "value"), 
+    )
+def update_seal_num_text(sub_axis):
+    return [sub_axis]
 
 
 
