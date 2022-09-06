@@ -17,7 +17,7 @@ app = dash.Dash(
     __name__,
     meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
 )
-app.title = "中国篆刻，方寸之间大天地"
+app.title = "中国篆刻｜方寸之间大有天地"
 
 server = app.server
 app.config.suppress_callback_exceptions = True
@@ -28,13 +28,15 @@ app.config.suppress_callback_exceptions = True
 # #########################################
 
 layout = dict(
-    margin=dict(l=20, r=20, b=20, t=20),
+    margin=dict(l=20, r=20, b=50, t=20),
     hovermode="closest",
     plot_bgcolor="rgba(0, 0, 0, 0)",
     paper_bgcolor="rgba(0, 0, 0, 0)",
     legend=dict(font=dict(size=12), orientation="v"),
     yaxis = dict(tickfont = dict(size=12)),
     xaxis = dict(tickfont = dict(size=12)),
+    yaxis_title = None,
+    xaxis_title = None,
 )
 
 color__dict = {
@@ -103,7 +105,7 @@ def banner():
                         id="banner_title",
                         children=[
                             html.A(
-                                "中国篆刻：方寸之间大有天地",
+                                "· 方寸之间大有天地",
                                 href="https://github.com/plotly/dash-svm",
                                 style={"text-decoration": "none", "color": "inherit"},
                             )
@@ -112,9 +114,9 @@ def banner():
                     html.A(
                         id="logo",
                         children=[
-                            html.Img(src=app.get_asset_url("GitHub_Logo.png"))
+                            html.Img(src=app.get_asset_url("logo.png"))
                         ],
-                        href="https://plot.ly/products/dash/",
+                        href="",
                     ),
                 ],
             )
@@ -139,7 +141,8 @@ axis_1 = html.Div(
                                 {'label': classify_list[7], 'value': classify_list[7]},                   
                             ],
                             value="印形",
-                            labelStyle={'display': 'block'}
+                            labelStyle={'display': 'block', 'color': 'lightgrey', 'font-size': 14, 'height': 26},
+                            inputStyle={"margin-right": "5px"},
                         ),
                         ]
                 )
@@ -162,7 +165,8 @@ axis_2 = html.Div(
                                 {'label': classify_list[7], 'value': classify_list[7]},  
                             ],
                             value="印文",
-                            labelStyle={'display': 'block'}
+                            labelStyle={'display': 'block', 'color': 'lightgrey', 'font-size': 14, 'height': 26},
+                            inputStyle={"margin-right": "5px"},
                         ),
                         ]
                 )
@@ -188,7 +192,8 @@ main_options = html.Div(
                             dcc.RadioItems(
                                 id='main_options',
                                 className="dcc_control",
-                                labelStyle={'display': 'block'},
+                                labelStyle={'display': 'block', 'color': 'lightgrey', 'font-size': 14, 'height': 26},
+                                inputStyle={"margin-right": "5px"},
                             ), 
                         ]
                 )
@@ -200,7 +205,8 @@ sub_options = html.Div(
                             dcc.RadioItems(
                                 id='sub_options',
                                 className="dcc_control",
-                                labelStyle={'display': 'block'},
+                                labelStyle={'display': 'block', 'color': 'lightgrey', 'font-size': 14, 'height': 26},
+                                inputStyle={"margin-right": "5px"},
                             ),
                         ]
                 )
@@ -222,11 +228,9 @@ def classify_dropdown():
 img_options_1 = html.Div(
                     className="img_options_1",
                     children=[
-                                html.H4("印章一"),
+                                html.P("印章一"),
                                 dcc.Dropdown(
                                     id='img_options_1',
-                                    options=[872,4253,4354,6,24],
-                                    value=872,
                                     className="dcc_control",
                                     clearable=False,
                                 ),   
@@ -236,11 +240,9 @@ img_options_1 = html.Div(
 img_options_2 = html.Div(
                     className="img_options_2",
                     children=[
-                                html.H4("印章二"),   
+                                html.P("印章二"),   
                                 dcc.Dropdown(
                                     id='img_options_2',
-                                    options=[872,4253,4354,6,24],
-                                    value=4354,
                                     className="dcc_control",
                                     clearable=False,
                                 ),     
@@ -270,7 +272,8 @@ def seal_num():
                                     className="dcc_control",
                                     options=['完整数据库','过滤结果'],
                                     value='完整数据库',
-                                    labelStyle={'display': 'block'},
+                                    labelStyle={"padding-right": "20px", 'color': 'lightgrey'},
+                                    inputStyle={"margin-right": "5px"},
                                 ),
                                 html.Br(),
                                 img_options,                              
@@ -348,7 +351,7 @@ left_column = html.Div(
 right_column = html.Div(
                 className="right_column sides",
                 children=[
-                    html.H3("可选印章数量"), 
+                    html.H3("印章属性表"), 
                     dcc.Graph(id="info_table_1", config={"displayModeBar": False}),                
                     ]
             )
@@ -639,10 +642,9 @@ def update_classify_graphic(main_axis, sub_axis):
     Input("main_axis", "value"), 
     )
 def update_share_graphic(main_axis):
-    column_y = main_axis
     fig = px.histogram(classify, 
                         x="朱色比例", 
-                        color="印文",
+                        color=main_axis,
                         marginal="box", # box or violin, rug
                         opacity = 0.7,
                         nbins = 50,
@@ -682,7 +684,7 @@ def update_share_graphic(img_options_1,img_options_2):
     columnwidth = [30,60,60],
     header = dict(
         values = [['<b>属性</b>'],['<b>印章（左）</b>'],['<b>印章（右）</b>']],
-        line_color='darkslategray',
+        line_color='grey',
         fill_color='black',
         align=['center','center','center'],
         font=dict(color='white', size=12),
@@ -690,9 +692,10 @@ def update_share_graphic(img_options_1,img_options_2):
     ),
     cells=dict(
         values=values,
-        line_color='darkslategray',
+        line_color='grey',
         fill=dict(color=['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)']),
         align=['left','left','left'],
+        font=dict(color='lightgrey', size=12),
         font_size=12,
         height=25)
         )
@@ -894,6 +897,30 @@ def update_seal_num_text(main_axis,sub_axis):
     )
 def update_seal_num_text(main_axis):
     return ["基于 ["+main_axis+"] 的印章朱色比例分布"]
+
+
+@app.callback(
+    [
+        Output('img_options_1', 'options'),
+        Output('img_options_1', 'value'),
+        Output('img_options_2', 'options'),
+        Output('img_options_2', 'value'),        
+    ],
+    [
+        Input('img_options_choice', 'value'),
+        Input("main_axis", "value"),   
+        Input("sub_axis", "value"),    
+        Input("main_options", "value"),   
+        Input("sub_options", "value"),    
+    ]
+    )
+def update_main_options(img_options_choice,main_axis,sub_axis,main_options,sub_options):
+    if img_options_choice=='完整数据库':
+        options = classify['序号'].tolist()
+        return options, options[2190], options, options[2508]
+    else:
+        options = classify[(classify[main_axis]==main_options)&(classify[sub_axis]==sub_options)]['序号'].tolist()
+        return options, options[0], options, options[-1]      
 
 
 # Run the server

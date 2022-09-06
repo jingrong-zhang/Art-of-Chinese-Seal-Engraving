@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: #f2f2f2;
+  background-color: #fcfaf2;
 }
 
 /* font
@@ -22,27 +22,30 @@ h3,
 h4,
 h5,
 h6 {
-  /* font-weight: 300; */
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 h1 {
   color: black;
   font-size: 28px;
   margin-bottom: 18px;
+  font-family: "Times New Roman", Times, serif;
 }
 h2 {
-  color: #97151c;
+  color: lightgray;
   font-size: 26px;
   margin-bottom: 18px;
 }
 h3 {
-  color: #97151c;
-  font-size: 20px;
+  color: #ab3b3a;
+  font-weight: bolder;
+  font-size: 18px;
   font-weight: 500;
   margin-bottom: 10px;
   margin-top: 15px;
 }
 h4 {
-  color: black;
+  color: #2f2f2f;
   font-size: 16px;
   font-weight: initial;
   margin-bottom: 10px;
@@ -56,7 +59,6 @@ h5 {
 }
 h6 {
   color: white;
-  background-color: #97151c;
 }
 
 button {
@@ -72,10 +74,9 @@ button {
 
 p {
   font-size: 16px;
-  color: #2f2f2f;
+  color: white;
   margin-bottom: 12px;
   line-height: 1.3;
-  /* text-align: justify; */
 }
 
 /* banner
@@ -91,15 +92,19 @@ p {
   color: #ffffff;
   display: inline-block;
   font-size: 2.2rem;
-  padding-top: 1.4rem;
+  padding-top: 20px;
   line-height: 1;
-  text-align: center;
+  padding-left: 10px;
+  letter-spacing: 5px;
+  font-family: "Times New Roman", Times, serif;
 }
 
 .banner Img {
   position: relative;
-  float: right;
-  height: 4.6rem;
+  float: left;
+  height: 3.8rem;
+  padding-left: 15px;
+  padding-top: 10px;
 }
 
 /* column
@@ -195,13 +200,12 @@ p {
   border: #828282;
   border-style: solid;
   border-width: 2px;
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow: 2px 2px 2px lightgrey;
 }
 
 .mid_column_graphs {
   width: 100%;
-  /* background-color: red; */
   display: flex;
   gap: 15px;
 }
@@ -213,7 +217,7 @@ p {
 }
 
 #classify_graphic {
-  height: 280px;
+  height: 300px;
 }
 
 .share_graphic {
@@ -223,11 +227,11 @@ p {
 }
 
 #share_graphic {
-  height: 280px;
+  height: 300px;
 }
 
 .sides {
-  background-color: #c5c5c5;
+  background-color: #373c38;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 1rem;
