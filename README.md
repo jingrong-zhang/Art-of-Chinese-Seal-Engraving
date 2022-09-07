@@ -6,7 +6,21 @@ Shanghai Library Open Data Contest
 
 **Data sourse**: Shanghai Library, http://opendata.library.sh.cn/
 
-**Development Tools**: Python Plotly, Dash, JS/CSS
+**Development Tools**: Python Plotly, Dash, JS/CSS, Esri StoryMaps
+
+**Project Website Link**: https://arcg.is/CiqKr
+
+**Dashboard Online Link**: https://chinese-seal.herokuapp.com/ 
+
+### Screenshots
+
+<img src="screenshot_1.png" alt="screenshot_1"  />
+
+<img src="screenshot_2.png" alt="screenshot_2"  />
+
+![screenshot_3](screenshot_3.png)
+
+![screenshot_4](screenshot_4.png)
 
 **How To Run Locally** : 
 
@@ -22,12 +36,3 @@ Run this app locally by:
 python app.py
 ```
 
-**Dashboard Online Link**: https://chinese-seal.herokuapp.com/ 
-
-### Screenshots
-
-![screenshot_1](screenshot_1.png)
-
-![screenshot_2](screenshot_2.png)
-
-![screenshot_3](screenshot_3.png)
