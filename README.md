@@ -1,26 +1,32 @@
 # Art of Chinese Seal Engraving
 
-Shanghai Library Open Data Contest
+Shanghai Library Open Data Contest 🥇
 
 **Author**: Jingrong Zhang (张镜荣)
 
-**Data sourse**: Shanghai Library, http://opendata.library.sh.cn/
+**Data Source**: Shanghai Library, http://opendata.library.sh.cn/
 
 **Development Tools**: Python Plotly, Dash, JS/CSS, Esri StoryMaps
 
-**Project Website Link**: https://arcg.is/CiqKr
+**Project Website**: https://arcg.is/CiqKr
 
-**Dashboard Online Link**: https://chinese-seal.herokuapp.com/ 
+**Online Dashboard**: https://chinese-seal.herokuapp.com/ 
+
+
 
 ### Screenshots
 
-<img src="screenshot_1.png" alt="screenshot_1"  />
+![01](./screenshots/01.png)
 
-<img src="screenshot_2.png" alt="screenshot_2"  />
+![02](./screenshots/02.png)
 
-![screenshot_3](screenshot_3.png)
+![03](./screenshots/03.png)
 
-![screenshot_4](screenshot_4.png)
+![04](./screenshots/04.png)
+
+![05](./screenshots/05.png)
+
+
 
 **How To Run Locally** : 
 
